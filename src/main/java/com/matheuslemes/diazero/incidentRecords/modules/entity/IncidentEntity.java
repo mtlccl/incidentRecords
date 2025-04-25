@@ -2,6 +2,7 @@ package com.matheuslemes.diazero.incidentRecords.modules.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,8 +22,8 @@ public class IncidentEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idIncident;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer idIncident;
 
     @NotBlank(message = "Esse campo é obrigatório")
     @Column(nullable = false, unique = true)
@@ -41,11 +42,11 @@ public class IncidentEntity {
     @CreationTimestamp
     private LocalDateTime closedAt;
 
-    public UUID getIdIncident() {
+    public Integer getIdIncident() {
         return idIncident;
     }
 
-    public void setIdIncident(UUID idIncident) {
+    public void setIdIncident(Integer idIncident) {
         this.idIncident = idIncident;
     }
 

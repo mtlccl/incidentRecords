@@ -7,28 +7,20 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.matheuslemes.diazero.incidentRecords.utils.*;
 
-import java.security.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/incident")
 public class IncidentControllerCreate {
     @Autowired
     private IncidentUseCase incidentUseCase;
-    int i = 0;
-
-    public void execute(){
-
-    }
 
     @PostMapping("/create")
     public ResponseEntity<Object> create(@Valid @RequestBody IncidentEntity incidentEntity) {
         try {
+
             var result = this.incidentUseCase.execute(incidentEntity);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
@@ -38,9 +30,12 @@ public class IncidentControllerCreate {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Object> update(@Valid @RequestBody IncidentEntity incidentEntity) {
+    public ResponseEntity<Object> update(@RequestBody IncidentEntity incidentEntity) {
         try {
-            var result = this.incidentUseCase.execute(incidentEntity);
+            incidentEntity.setUpdatedAt(LocalDateTime.now());
+            incidentEntity.setCreatedAt(LocalDateTime.now());
+            incidentEntity.setClosedAt(LocalDateTime.now());
+            var result = this.incidentUseCase.update(incidentEntity);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,16 +43,47 @@ public class IncidentControllerCreate {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Object> delete(@Valid @RequestBody IncidentEntity incidentEntity) {
+    @DeleteMapping("/delete/{idIncident}")
+    public void delete(@PathVariable("idIncident") Integer incidentEntity) {
         try {
-            var result = this.incidentUseCase.execute(incidentEntity);
-            return ResponseEntity.ok().body(result);
+            this.incidentUseCase.delete(incidentEntity);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    @GetMapping("/getbyid/{idIncident}")
+    public String getById(@PathVariable("idIncident") Integer incidentEntity) {
+        try {
+            var result = this.incidentUseCase.getById(incidentEntity);
+            return result.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    @GetMapping("/getbyall")
+    public ResponseEntity<Object> getAll() {
+        try {
+            var result = this.incidentUseCase.getByAll();
+            return ResponseEntity.ok().body(result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping("/getbyordertable")
+    public ResponseEntity<Object> getOrderTable() {
+        try {
+            var result = this.incidentUseCase.getByOrder20();
+            return ResponseEntity.ok().body(result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
