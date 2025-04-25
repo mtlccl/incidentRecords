@@ -10,5 +10,5 @@ public interface IncidentRepository extends JpaRepository<IncidentEntity, Intege
 
 
     @Query(value = "SELECT * FROM incident ORDER BY id_incident DESC LIMIT 20", nativeQuery = true)
-    List<IncidentEntity> getByOrder20();
+    List<IncidentEntity> getByOrderTwenty();
 }

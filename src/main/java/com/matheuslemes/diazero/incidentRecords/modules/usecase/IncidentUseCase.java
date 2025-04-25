@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class IncidentUseCase {
-    private IncidentEntity uuid = new IncidentEntity();
+
     @Autowired
     private IncidentRepository incidentRepository;
 
@@ -34,9 +34,9 @@ public class IncidentUseCase {
         return this.incidentRepository.findAll();
     }
 
-    public List<IncidentEntity> getByOrder20() {
-        List<IncidentEntity> ordered = this.incidentRepository.getByOrder20();
-        return ordered;
+    public List<IncidentEntity> getByOrderTwenty() {
+        List<IncidentEntity> orderedByTwenty = this.incidentRepository.getByOrderTwenty();
+        return orderedByTwenty;
     }
 
 }
