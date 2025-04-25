@@ -80,7 +80,7 @@ public class IncidentControllerCreate {
     @GetMapping("/getbyordertable")
     public ResponseEntity<Object> getOrderTable() {
         try {
-            var result = this.incidentUseCase.getByOrder20();
+            var result = this.incidentUseCase.getByOrderTwenty();
             return ResponseEntity.ok().body(result);
 
         } catch (Exception e) {
