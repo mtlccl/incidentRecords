@@ -2,6 +2,8 @@ package com.matheuslemes.diazero.incidentRecords.modules.controller;
 
 
 import com.matheuslemes.diazero.incidentRecords.modules.entity.IncidentEntity;
+import com.matheuslemes.diazero.incidentRecords.modules.exceptions.ErrorAPI;
+import com.matheuslemes.diazero.incidentRecords.modules.exceptions.UserFoundExcetion;
 import com.matheuslemes.diazero.incidentRecords.modules.usecase.IncidentUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/incident")
@@ -25,7 +26,7 @@ public class IncidentControllerCreate {
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new UserFoundExcetion();
         }
     }
 
@@ -39,7 +40,7 @@ public class IncidentControllerCreate {
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new ErrorAPI();
         }
     }
 
@@ -49,6 +50,7 @@ public class IncidentControllerCreate {
             this.incidentUseCase.delete(incidentEntity);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new ErrorAPI();
         }
     }
 
@@ -59,7 +61,7 @@ public class IncidentControllerCreate {
             return result.toString();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw new ErrorAPI();
         }
     }
 
@@ -71,7 +73,7 @@ public class IncidentControllerCreate {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw new ErrorAPI();
         }
     }
 
@@ -83,7 +85,7 @@ public class IncidentControllerCreate {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw new ErrorAPI();
         }
     }
 }

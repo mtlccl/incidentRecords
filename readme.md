@@ -1,29 +1,24 @@
 
-# Gestão de incidentes - BackEnd
+# Incidents records - BackEnd
 
-## Resetar o application.properties para o Ambiente Local
+# Requirements
+    1- Java 21
+    2- MVN 3.8+
+    3- API Dog (REQS)
+    4- PostBird (BD)
+    5- Docker (img = postgresql)
+    6- Spring-boot 3.4.5
 
-1 - Abra o arquivo src/main/resources/application.properties.
+# APIS
+    /incident/create
+    /incident/update
+    /incident/delete/{idIncident}
+    /incident/getbyid/{idIncident}
+    /incident/getbyall
+    /incident/getbyordertable
 
-2 - Defina no seu application.properties em qual porta ele irá rodar e em seguida, você precisara definir qual a porta, o back-end está rodando: 
-***
-    server.port=8081
-    host.api.gestao.vagas=http://localhost:8081 
-***
+## Run Project
+    0- port : 8080
+    1- mvn -U  clean install
+    2- mvn spring-boot:run
 
-3- Salve o arquivo.
-
-## Executando a aplicação no Ambiente Local
-
-1 - Instale as dependências do projeto:
-***
-    mvn -U  clean install
-***
-
-2 - Inicie o projeto: 
-***
-    mvn spring-boot:run
-***
-
-A aplicação estará disponível em http://localhost:8081.
-(Note que que, este 8081 deverá ser substituído pela porta que você configurou no seu application.properties.)

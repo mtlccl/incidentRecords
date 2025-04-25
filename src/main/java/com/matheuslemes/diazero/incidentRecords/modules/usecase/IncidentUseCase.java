@@ -2,13 +2,10 @@ package com.matheuslemes.diazero.incidentRecords.modules.usecase;
 
 import com.matheuslemes.diazero.incidentRecords.modules.entity.IncidentEntity;
 import com.matheuslemes.diazero.incidentRecords.modules.repository.IncidentRepository;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Arrays;
-import java.util.Collections;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class IncidentUseCase {
@@ -38,9 +35,8 @@ public class IncidentUseCase {
     }
 
     public List<IncidentEntity> getByOrder20() {
-        List<IncidentEntity> a = this.incidentRepository.getByOrder20();
-        return a;
+        List<IncidentEntity> ordered = this.incidentRepository.getByOrder20();
+        return ordered;
     }
-
 
 }
