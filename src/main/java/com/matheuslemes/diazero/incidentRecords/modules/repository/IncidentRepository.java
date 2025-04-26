@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface IncidentRepository extends JpaRepository<IncidentEntity, Integer> {
 
-
     @Query(value = "SELECT * FROM incident ORDER BY id_incident DESC LIMIT 20", nativeQuery = true)
     List<IncidentEntity> getByOrderTwenty();
 }

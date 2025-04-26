@@ -4,7 +4,7 @@
 # Requirements
     0- Java 21
     1- MVN 3.9+
-    3- Spring-boot 3.4.5
+    2- Spring-boot 3.4.5
 
 # APIS
     /incident/create
@@ -54,24 +54,6 @@
 
 
 ---
-### MYSQL
-###  dbeaver (DataBase Interface)
-    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
-    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-    spring.datasource.url=jdbc:mysql://incident_record:3306/incidentrecords_db?serverTimezone=UTC
-    spring.datasource.username=root
-    spring.datasource.password=root
-    spring.jpa.hibernate.ddl-auto=update
-
-# (commands for docker MYSQL)
-
-    generating a jar to run through mysql with docker (Dockerfile)
-
-    docker run -d -p 3308:3306 --name=incident_record --env="MYSQL_ROOT_PASSWORD=root" --env="MYSQL_PASSWORD=root" --env="MYSQL_DATABASE=incidentrecords_db" mysql:latest
-    mvn clean install -DskipTests
-    docker build -t incident-image .
-    docker run -t --link incident_record:mysql -p 8080:8080 incident-image
-
 
 
 
