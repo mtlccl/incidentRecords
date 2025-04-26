@@ -113,7 +113,7 @@ public class IncidentControllerCreate {
 
     @DeleteMapping("/delete/{idIncident}")
     @PreAuthorize("hasRole('INCIDENT')")
-    @Operation(summary = "Delete Column", description = "essa funcao busca as infos do candidato")
+    @Operation(summary = "Delete Column", description = "this api deletes a column")
     @SecurityRequirement(name = "jwt_auth")
     public void delete(@PathVariable("idIncident") Integer incidentEntity) throws EntityNotFoundException {
         try {
