@@ -12,11 +12,18 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
 
 @RestController
 @RequestMapping("/incident")
@@ -26,6 +33,12 @@ import java.time.LocalDateTime;
 public class IncidentControllerCreate {
     @Autowired
     private IncidentUseCase incidentUseCase;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Value("${security.token.secret}")
+    private String secretKey;
+
 
     @PostMapping("/create")
     @ApiResponses({
@@ -34,27 +47,43 @@ public class IncidentControllerCreate {
             }),
             @ApiResponse(responseCode = "400", description = "incident already registered")
     })
-    public ResponseEntity<Object> create(@Valid @RequestBody IncidentEntity incidentEntity) {
+    public ResponseEntity<List> create(@Valid @RequestBody IncidentEntity incidentEntity) {
         try {
 
             var result = this.incidentUseCase.execute(incidentEntity);
-            return ResponseEntity.ok().body(result);
+            String token = utilsRespMessage.genToken(incidentEntity, passwordEncoder, secretKey);
+
+            JSONArray resp2 = new JSONArray();
+            resp2.put(result);
+            resp2.put("AuthorizationToken: " + token);
+            List<JSONArray> resp = new ArrayList<>();
+            resp.add(resp2);
+
+            return ResponseEntity.ok(resp.get(0).toList());
         } catch (Exception e) {
             e.getMessage();
             if (!e.getMessage().isEmpty()) {
                 return ResponseEntity.ok(utilsRespMessage.formatMessages(e.getMessage()));
             } else {
-                return ResponseEntity.ok(e.getMessage());
+                return ResponseEntity.ok(utilsRespMessage.formatMessages(e.getMessage()));
             }
         }
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestBody IncidentEntity incidentEntity) throws EntityNotFoundException {
+    public ResponseEntity<List> update(@RequestBody IncidentEntity incidentEntity) throws EntityNotFoundException {
         try {
             incidentEntity.setUpdatedAt(LocalDateTime.now());
             var result = this.incidentUseCase.update(incidentEntity);
-            return ResponseEntity.ok().body(result);
+            String token = utilsRespMessage.genToken(incidentEntity, passwordEncoder, secretKey);
+
+            JSONArray resp2 = new JSONArray();
+            resp2.put(result);
+            resp2.put("AuthorizationTokenUpdate: " + token);
+            List<JSONArray> resp = new ArrayList<>();
+            resp.add(resp2);
+
+            return ResponseEntity.ok(resp.get(0).toList());
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
             if (!e.getMessage().isEmpty()) {
@@ -62,7 +91,7 @@ public class IncidentControllerCreate {
                 return ResponseEntity.ok(utilsRespMessage.formatMessages(e.getMessage()));
 
             } else {
-                return ResponseEntity.ok().body(e.getMessage());
+                throw new ErrorAPI();
             }
         }
     }

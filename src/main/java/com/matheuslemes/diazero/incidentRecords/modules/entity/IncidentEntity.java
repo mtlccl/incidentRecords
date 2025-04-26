@@ -51,5 +51,15 @@ public class IncidentEntity {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+    public String getName() {
+        return name;
+    }
 
+    public void setIdIncident(Integer idIncident) {
+        this.idIncident = idIncident;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
