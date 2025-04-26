@@ -30,12 +30,10 @@ public class IncidentControllerCreate {
         }
     }
 
-    @PutMapping("/update")
+    @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestBody IncidentEntity incidentEntity) {
         try {
             incidentEntity.setUpdatedAt(LocalDateTime.now());
-            incidentEntity.setCreatedAt(LocalDateTime.now());
-            incidentEntity.setClosedAt(LocalDateTime.now());
             var result = this.incidentUseCase.update(incidentEntity);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
