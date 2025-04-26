@@ -1,5 +1,6 @@
 package com.matheuslemes.diazero.incidentRecords.modules.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -23,10 +24,12 @@ public class IncidentEntity {
 
     @NotBlank(message = "Esse campo é obrigatório")
     @Column(nullable = false, unique = true)
+    @Schema(example = "Name incident")
     private String name;
 
     @NotBlank(message = "Esse campo é obrigatório")
     @Column(nullable = false, unique = true)
+    @Schema(example = "Description")
     private String description;
 
     @CreationTimestamp
@@ -51,12 +54,9 @@ public class IncidentEntity {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
     public String getName() {
         return name;
-    }
-
-    public void setIdIncident(Integer idIncident) {
-        this.idIncident = idIncident;
     }
 
     public void setName(String name) {

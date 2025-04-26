@@ -1,7 +1,5 @@
 package com.matheuslemes.diazero.incidentRecords.modules.usecase;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.matheuslemes.diazero.incidentRecords.modules.entity.IncidentEntity;
 import com.matheuslemes.diazero.incidentRecords.modules.repository.IncidentRepository;
 import org.springframework.beans.factory.annotation.Autowired;

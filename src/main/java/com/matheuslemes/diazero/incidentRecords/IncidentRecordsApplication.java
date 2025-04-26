@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SecurityScheme(name = "jwt_auth", scheme = "bearer", bearerFormat = "JWT", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class IncidentRecordsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(IncidentRecordsApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(IncidentRecordsApplication.class, args);
+    }
 
 }

@@ -13,7 +13,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class utilsRespMessage {
     @Autowired
@@ -40,7 +39,7 @@ public class utilsRespMessage {
         return respList.get(0).toList();
     }
 
-    public static String genToken(IncidentEntity incidentEntity, PasswordEncoder passwordEncoder,String secretKey) {
+    public static String genToken(IncidentEntity incidentEntity, PasswordEncoder passwordEncoder, String secretKey) {
 
         var encpryptUser = passwordEncoder.encode(incidentEntity.getName());
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
