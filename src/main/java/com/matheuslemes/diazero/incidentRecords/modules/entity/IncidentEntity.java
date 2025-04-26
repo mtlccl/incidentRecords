@@ -31,23 +31,20 @@ public class IncidentEntity {
     private String description;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @CreationTimestamp
     private LocalDateTime updatedAt;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime closedAt;
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public void setClosedAt(LocalDateTime closedAt) {
-        this.closedAt = closedAt;
-    }
 }
