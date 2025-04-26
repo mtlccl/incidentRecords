@@ -40,7 +40,13 @@ public class IncidentEntity {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    public Integer getIdIncident() {
+        return idIncident;
+    }
 
+    public String getDescription() {
+        return description;
+    }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
