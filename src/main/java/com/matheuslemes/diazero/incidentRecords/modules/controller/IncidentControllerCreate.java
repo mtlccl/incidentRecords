@@ -116,9 +116,14 @@ public class IncidentControllerCreate {
     @PreAuthorize("hasRole('INCIDENT')")
     @Operation(summary = "Delete Column", description = "this api deletes a column")
     @SecurityRequirement(name = "jwt_auth")
-    public void deleteColumns(@PathVariable("idIncident") Integer incidentEntity) throws EntityNotFoundException {
+    public ResponseEntity<Object> deleteColumns(@PathVariable("idIncident") Integer incidentEntity) throws EntityNotFoundException {
         try {
-            this.incidentUseCase.delete(incidentEntity);
+            var result = this.incidentUseCase.delete(incidentEntity);
+            JSONArray respArray = new JSONArray();
+            List<JSONArray> respListReturn = new ArrayList<>();
+            respArray.put(result);
+            respListReturn.add(respArray);
+            return ResponseEntity.ok(respListReturn.get(0).toList());
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
             throw new ErrorAPI();

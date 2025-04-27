@@ -27,11 +27,10 @@
 
 ## Run Project postgresql 
     0- Docker (need docker app, img = postgresql, dbeaver app or postbird app)
-    1- docker-compose up --build
+    1- docker run --name incidentdb -e POSTGRES_PASSWORD=admin -d postgres
     2- docker-compose up -d
-    3- port : 8080
-    4- mvn clean install
-    5- mvn spring-boot:run
+    3- mvn clean install
+    4- mvn spring-boot:run
 
 ---
 
