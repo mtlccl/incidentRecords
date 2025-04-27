@@ -33,24 +33,30 @@
 
 ### PostBird or dbeaver (DataBase Interface)
     Docker (img = postgres:latest)
-    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
     spring.datasource.url=jdbc:postgresql://localhost:5432/incident_record
     spring.datasource.username=admin
     spring.datasource.password=admin
     spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
 
 ---
 ## H2 
 ### (DataBase Interface h2) http://localhost:8080/h2-console
 
     spring.datasource.url=jdbc:h2:mem:incident_record
+    spring.datasource.driver-class-name=org.h2.Driver
     spring.datasource.username=sa
     spring.datasource.password=
+    
     spring.jpa.hibernate.ddl-auto=update
-    spring.datasource.driver-class-name=org.h2.Driver
     spring.jpa.show-sql=true
+    spring.jpa.database-plataform=org.hibernate.dialect.H2Dialect
+    
     spring.h2.console.enabled=true
     spring.h2.console.path=/h2-console
+    
+    security.token.secret=IncidentJava_@123#
 
 
 ---

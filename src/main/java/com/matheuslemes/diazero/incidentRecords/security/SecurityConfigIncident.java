@@ -15,7 +15,8 @@ public class SecurityConfigIncident {
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/swagger-resources/**",
-            "/actuator/**"
+            "/actuator/**",
+            "/h2-console/**"
     };
     @Autowired
     private SecurityIncidentFilter securityIncidentFilter;
