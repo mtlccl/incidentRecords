@@ -14,8 +14,19 @@
     /incident/getbyall
     /incident/getbyordertable
 
-## Run Project
-    0- Docker (img = postgresql)
+---
+# DB Conections run DB
+
+    You can run the code with 2 databases, 
+    postgresql using docker img and a dbeaver or postbird app 
+    and you can run it with the h2 database by changing the properties configuration as well.
+
+## POSTGRESQL 
+
+### PostBird or dbeaver (DataBase Interface)
+
+## Run Project postgresql 
+    0- Docker (need docker app, img = postgresql, dbeaver app or postbird app)
     1- docker-compose up --build
     2- docker-compose up -d
     3- port : 8080
@@ -23,38 +34,17 @@
     5- mvn spring-boot:run
 
 ---
-# ROUTES JSON Postman
-### download (https://drive.google.com/file/d/1uEIgNqEeMLTdi8QaV2t6yQoKNYuskvFi/view?usp=drive_link)
+
+## Run Project H2 Database http://localhost:8080/h2-console
+        
+    0- change propierts main for applicationh2
+    1- mvn clean install
+    2- mvn spring-boot:run
 
 ---
-# DB Conections
+# Run APIS in Postman or Swagger http://localhost:8080/swagger-ui/index.html#/
 
-## POSTGRESQL 
-
-### PostBird or dbeaver (DataBase Interface)
-    Docker (img = postgres:latest)
-    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-    spring.datasource.url=jdbc:postgresql://localhost:5432/incident_record
-    spring.datasource.username=admin
-    spring.datasource.password=admin
-    spring.jpa.hibernate.ddl-auto=update
-
----
-## H2 
-### (DataBase Interface h2) http://localhost:8080/h2-console
-
-    spring.datasource.url=jdbc:h2:mem:incident_record
-    spring.datasource.username=sa
-    spring.datasource.password=
-    spring.jpa.hibernate.ddl-auto=update
-    spring.datasource.driver-class-name=org.h2.Driver
-    spring.jpa.show-sql=true
-    spring.h2.console.enabled=true
-    spring.h2.console.path=/h2-console
-
-
----
-
+### download ready json import Postman(https://drive.google.com/file/d/15blpfxDyNh1tDCKW7zlpH70CR8utu5Jz/view?usp=sharing)
 
 
 
