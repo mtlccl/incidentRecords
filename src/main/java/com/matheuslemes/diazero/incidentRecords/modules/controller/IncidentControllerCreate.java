@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -51,19 +52,20 @@ public class IncidentControllerCreate {
     })
 
 
-    public ResponseEntity<List> create(@Valid @RequestBody IncidentEntity incidentEntity) {
+    public ResponseEntity<List> createNewColumns(@Valid @RequestBody IncidentEntity incidentEntity) {
         try {
 
             var result = this.incidentUseCase.execute(incidentEntity);
             String token = utilsRespMessage.genToken(incidentEntity, passwordEncoder, secretKey);
 
-            JSONArray resp2 = new JSONArray();
-            resp2.put(result);
-            resp2.put("AuthorizationToken: " + token);
-            List<JSONArray> resp = new ArrayList<>();
-            resp.add(resp2);
+            JSONArray respArray = new JSONArray();
+            List<JSONArray> respListReturn = new ArrayList<>();
 
-            return ResponseEntity.ok(resp.get(0).toList());
+            respArray.put(result);
+            respArray.put("AuthorizationToken: " + token);
+            respListReturn.add(respArray);
+
+            return ResponseEntity.ok(respListReturn.get(0).toList());
         } catch (Exception e) {
             e.getMessage();
             if (!e.getMessage().isEmpty()) {
@@ -83,19 +85,20 @@ public class IncidentControllerCreate {
             }),
             @ApiResponse(responseCode = "400", description = "user not found")
     })
-    public ResponseEntity<List> update(@RequestBody IncidentEntity incidentEntity) throws EntityNotFoundException {
+    public ResponseEntity<List> updateColumns(@RequestBody IncidentEntity incidentEntity) throws EntityNotFoundException {
         try {
             incidentEntity.setUpdatedAt(LocalDateTime.now());
             var result = this.incidentUseCase.update(incidentEntity);
             String token = utilsRespMessage.genToken(incidentEntity, passwordEncoder, secretKey);
 
-            JSONArray resp2 = new JSONArray();
-            resp2.put(result);
-            resp2.put("AuthorizationTokenUpdate: " + token);
-            List<JSONArray> resp = new ArrayList<>();
-            resp.add(resp2);
+            JSONArray respArray = new JSONArray();
+            List<JSONArray> respListReturn = new ArrayList<>();
 
-            return ResponseEntity.ok(resp.get(0).toList());
+            respArray.put(result);
+            respArray.put("AuthorizationTokenUpdate: " + token);
+            respListReturn.add(respArray);
+
+            return ResponseEntity.ok(respListReturn.get(0).toList());
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
             if (!e.getMessage().isEmpty()) {
@@ -113,7 +116,7 @@ public class IncidentControllerCreate {
     @PreAuthorize("hasRole('INCIDENT')")
     @Operation(summary = "Delete Column", description = "this api deletes a column")
     @SecurityRequirement(name = "jwt_auth")
-    public void delete(@PathVariable("idIncident") Integer incidentEntity) throws EntityNotFoundException {
+    public void deleteColumns(@PathVariable("idIncident") Integer incidentEntity) throws EntityNotFoundException {
         try {
             this.incidentUseCase.delete(incidentEntity);
         } catch (EntityNotFoundException e) {
@@ -127,7 +130,7 @@ public class IncidentControllerCreate {
     @PreAuthorize("hasRole('INCIDENT')")
     @Operation(summary = "Column by ID", description = "this api returns a specific Column using the id")
     @SecurityRequirement(name = "jwt_auth")
-    public ResponseEntity<Object> getById(@PathVariable("idIncident") Integer incidentEntity) {
+    public ResponseEntity<Object> getColumnById(@PathVariable("idIncident") Integer incidentEntity) {
         try {
             var result = this.incidentUseCase.getById(incidentEntity);
             if (result.getDescription() != null) {
@@ -152,7 +155,7 @@ public class IncidentControllerCreate {
     @PreAuthorize("hasRole('INCIDENT')")
     @Operation(summary = "All Columns", description = "This API returns all possible Columns from the database")
     @SecurityRequirement(name = "jwt_auth")
-    public ResponseEntity<Object> getAll() {
+    public ResponseEntity<Object> getAllColumns() {
         try {
             var result = this.incidentUseCase.getByAll();
             return ResponseEntity.ok().body(result);
@@ -174,10 +177,22 @@ public class IncidentControllerCreate {
     @PreAuthorize("hasRole('INCIDENT')")
     @Operation(summary = "Ordered Column", description = "This API returns the twenty Columns in descending order")
     @SecurityRequirement(name = "jwt_auth")
-    public ResponseEntity<Object> getOrderTable() {
+    public ResponseEntity<Object> getOrderColumns() {
         try {
             var result = this.incidentUseCase.getByOrderTwenty();
-            return ResponseEntity.ok().body(result);
+            if (result.size() >= 20) {
+                return ResponseEntity.ok().body(result);
+
+            } else {
+                JSONObject respMSG = new JSONObject();
+                JSONArray respArray = new JSONArray();
+                List<JSONArray> respListReturn = new ArrayList<>();
+                respMSG.put("error", "you don't have enough columns to return, number of columns available: " + result.size());
+                respArray.put(respMSG);
+                respListReturn.add(respArray);
+
+                return ResponseEntity.ok(respListReturn.get(0).toList());
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
