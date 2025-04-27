@@ -48,8 +48,13 @@ public class IncidentUseCase {
     }
 
     public List<IncidentEntity> getByOrderTwenty() {
-        List<IncidentEntity> orderedByTwenty = this.incidentRepository.getByOrderTwenty();
-        return orderedByTwenty;
+        List<IncidentEntity> columnsFind = this.incidentRepository.findAll();
+        if (columnsFind.size() >= 20){
+            List<IncidentEntity> orderedByTwenty = this.incidentRepository.getByOrderTwenty();
+            return orderedByTwenty;
+        }else{
+            return columnsFind;
+        }
     }
 
 }
