@@ -15,6 +15,20 @@
     /incident/getbyordertable
 
 ---
+# Actuator prometheus urls
+    
+http://localhost:8080/actuator/prometheus
+
+http://localhost:9090/
+## Grafana 
+http://localhost:3000/
+
+    login/senha = admin
+    Home -> Connections -> Add new connection, choise Prometheus
+    change connection for http://prometheus:9090 
+    -> building a dashboard choise prometheus default
+    -> find in Metric http_server_requests_seconds_count and Run queries.
+---
 # DB Conections run DB
 
     You can run the code with 2 databases, 
@@ -24,11 +38,9 @@
 ## POSTGRESQL 
 
 ### Run Project postgresql PostBird or dbeaver (DataBase Interface)
-    0- Docker (need docker app, img = postgresql, dbeaver app or postbird app)
-    1- docker run --name incidentdb -e POSTGRES_PASSWORD=admin -d postgres
-    2- docker-compose up -d
-    3- mvn clean install
-    4- mvn spring-boot:run
+    0- docker-compose up -d
+    1- mvn clean install
+    2- mvn spring-boot:run
 
 ---
 ## H2
