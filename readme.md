@@ -47,9 +47,10 @@ http://localhost:3000/
 
 ### Run Project H2 Database http://localhost:8080/h2-console
         
-    0- change propierts main for applicationh2
+    0- use applicationh2 in main application 
     1- mvn clean install
     2- mvn spring-boot:run
+    3- if you want to run prometheus with granafa on h2 use (docker-compose up -d (need docker app))
 
 ---
 ## Run APIS in Postman or Swagger http://localhost:8080/swagger-ui/index.html#/
