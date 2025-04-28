@@ -79,12 +79,6 @@ public class IncidentControllerCreate {
 
     @PatchMapping("/update")
     @Operation(summary = "Update Collum", description = "This API updates columns of a table")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = IncidentEntity.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "user not found")
-    })
     public ResponseEntity<List> updateColumns(@RequestBody IncidentEntity incidentEntity) throws EntityNotFoundException {
         try {
             incidentEntity.setUpdatedAt(LocalDateTime.now());
